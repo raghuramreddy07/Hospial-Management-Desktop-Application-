@@ -1,0 +1,4 @@
+target/
+hospital.db
+hospital.db-shm
+hospital.db-wal

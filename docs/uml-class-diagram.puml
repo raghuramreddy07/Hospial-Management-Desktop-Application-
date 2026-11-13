@@ -1,0 +1,68 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Person {
+  - id: int
+  - name: String
+  - phone: String
+}
+class Doctor {
+  - specialization: String
+  - email: String
+  - workStart: LocalTime
+  - workEnd: LocalTime
+}
+class Patient {
+  - age: int
+  - gender: String
+  - address: String
+}
+class Appointment {
+  - id: int
+  - doctorId: int
+  - patientId: int
+  - date: LocalDate
+  - startTime: LocalTime
+  - endTime: LocalTime
+  - status: AppointmentStatus
+  - reason: String
+}
+enum AppointmentStatus { BOOKED; CANCELLED; COMPLETED }
+interface DoctorDAO
+interface PatientDAO
+interface AppointmentDAO
+class JdbcDoctorDAO
+class JdbcPatientDAO
+class JdbcAppointmentDAO
+class DoctorService
+class PatientService
+class AppointmentService
+class MainFrame
+class DoctorPanel
+class PatientPanel
+class AppointmentPanel
+class DBConnection
+
+Person <|-- Doctor
+Person <|-- Patient
+Doctor "1" -- "0..*" Appointment
+Patient "1" -- "0..*" Appointment
+Appointment --> AppointmentStatus
+DoctorDAO <|.. JdbcDoctorDAO
+PatientDAO <|.. JdbcPatientDAO
+AppointmentDAO <|.. JdbcAppointmentDAO
+DoctorService --> DoctorDAO
+PatientService --> PatientDAO
+AppointmentService --> AppointmentDAO
+AppointmentService --> DoctorDAO
+AppointmentService --> PatientDAO
+MainFrame --> DoctorPanel
+MainFrame --> PatientPanel
+MainFrame --> AppointmentPanel
+DoctorPanel --> DoctorService
+PatientPanel --> PatientService
+AppointmentPanel --> AppointmentService
+JdbcDoctorDAO ..> DBConnection
+JdbcPatientDAO ..> DBConnection
+JdbcAppointmentDAO ..> DBConnection
+@enduml
